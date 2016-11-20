@@ -1,0 +1,25 @@
+{
+  "bitwise": true,
+  "browser": true,
+  "curly": true,
+  "eqeqeq": true,
+  "esnext": true,
+  "latedef": true,
+  "jasmine": true,
+  "noarg": true,
+  "node": true,
+  "strict": true,
+  "undef": true,
+  "unused": true,
+  "globals": {
+        "jasmine": true,
+        "angular": true,
+        "inject": false,
+        "browser": true,
+        "element": true,
+        "by":true,
+        "io":true,
+        "_":false,
+        "$":false
+  }
+}

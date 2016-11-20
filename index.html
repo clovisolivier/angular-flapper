@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Wall Street Party</title>
+    <meta name="description" content="">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <style type="text/css">
+        * {
+            -webkit-touch-callout: none;
+            /* Disable selection/copy in UIWebView */
+        }
+    </style>
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link href="bower_components/flapper/css/flapper.css" type="text/css" rel="stylesheet" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <!-- endbuild -->
+</head>
+
+<body ng-app="myAppV2App">
+        
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class=" container">
+        <div ng-view=""></div>
+    </div>
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/ngFitText/dist/ng-FitText.min.js"></script>
+    <script src="bower_components/humanize-duration/humanize-duration.js"></script>
+    <script src="bower_components/angular-timer/dist/angular-timer.js"></script>
+    <script src="bower_components/angular-css/angular-css.js"></script>
+    <script src="bower_components/angular-google-chart/ng-google-chart.js"></script>
+    <script src="bower_components/flapper/src/jquery.flapper.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+
+    <!-- endbower -->
+    <!-- endbuild -->
+
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/services/chartdataaccess.js"></script>
+        <script src="scripts/services/fileaccess.js"></script>
+        <script src="scripts/services/slicer.js"></script>
+        <script src="scripts/services/socketer.js"></script>
+        <script src="scripts/services/computer.js"></script>
+         <script src="scripts/directives/flapper.js"></script>
+         <script src="scripts/directives/badge.js"></script> 
+        <script src="scripts/controllers/pad.js"></script>
+        <script src="scripts/controllers/config.js"></script>
+        <script src="scripts/controllers/admin2.js"></script>
+        <script src="scripts/controllers/V2/adminV2.js"></script>
+        <script src="scripts/controllers/V2/monitor.js"></script>
+        <script src="scripts/controllers/V2/krach.js"></script>
+        <script src="scripts/controllers/V2/config.js"></script>
+        <script src="scripts/controllers/V2/config.manager.js"></script>
+        <script src="scripts/controllers/V2/wording.js"></script>
+        <script src="scripts/controllers/graphRef.js"></script>
+
+        <script src="components/tips/tips.controller.js"></script>
+        <script src="components/config_produits/config_produits.controller.js"></script>
+        <script src="components/options_manager/options_manager.controller.js"></script>
+    <!-- endbuild -->
+</body>
+
+</html>
