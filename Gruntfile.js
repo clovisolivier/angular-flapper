@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 
     // Configurable paths for the application
     var appConfig = {
-        app: 'public',
+        app: 'source',
         dist: 'dist'
     };
 
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 
 
         // Project settings
-        tprint: appConfig,
+        myApp: appConfig,
 
         pkg: grunt.file.readJSON('package.json'),
 
@@ -56,9 +56,7 @@ module.exports = function(grunt) {
 
         karma: {
             unit: {
-                configFile: 'test/karma.conf.js',
-                background: true,
-                singleRun: false
+                configFile: 'test/karma.conf.js'
             }
         },
 
@@ -79,9 +77,9 @@ module.exports = function(grunt) {
                 jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish')
             },
-            all: ['Gruntfile.js', '<%= tprint.app %>/scripts/**/*.js', 'server.js', 'server/**/*.js'],
+            all: ['Gruntfile.js', '<%= myApp.app %>/scripts/**/*.js', 'server.js', 'server/**/*.js'],
 
-            test: ['<%= tprint.app %>/{,*/}*.test.js']
+            test: ['<%= myApp.app %>/{,*/}*.test.js']
         },
 
         // Make sure code styles are up to par
@@ -91,11 +89,11 @@ module.exports = function(grunt) {
             },
             all: {
                 src: [
-                    '<%= tprint.app %>/js/{,*/}*.js'
+                    '<%= myApp.app %>/js/{,*/}*.js'
                 ]
             },
             test: {
-                src: ['<%= tprint.app %>/{,*/}*.test.js']
+                src: ['<%= myApp.app %>/{,*/}*.test.js']
             }
         },
 
@@ -105,7 +103,7 @@ module.exports = function(grunt) {
                 stoponerror: false,
                 relaxerror: []
             },
-            files: ['<%= tprint.app %>/index.html']
+            files: ['<%= myApp.app %>/index.html']
         },
 
         // Analyse HTML style
@@ -128,40 +126,19 @@ module.exports = function(grunt) {
                 options: {
                     import: 2
                 },
-                src: ['<%= tprint.app %>/styles/**/*.css']
+                src: ['<%= myApp.app %>/styles/**/*.css']
             },
             lax: {
                 options: {
                     import: false
                 },
-                src: ['<%= tprint.app %>/styles/**/*.css']
+                src: ['<%= myApp.app %>/styles/**/*.css']
             }
         },
         jsbeautifier: {
             default: {
-                src: ["Gruntfile.js", "server.js", "server/**/*.js", "public/components/**/*.js", "public/components/**/*.html", "public/scripts/**/*.js", "public/views/**/*.html"],
-                files: ["public/bower_components/**/*.js", "public/bower_components/*.js", "public/angular/**/*.js", "public/angular/*.js"]
-
-            },
-            js: {
-                src: ["Gruntfile.js", "server.js", "server/**/*.js", "public/scripts/**/*.js"],
-                files: ["public/bower_components/**/*.js", "public/bower_components/*.js", "public/angular/**/*.js", "public/angular/*.js"]
-
-            },
-            html: {
-                src: ["public/views/**/*.html"],
-                files: ["public/bower_components/**/*.js", "public/bower_components/*.js", "public/angular/**/*.js", "public/angular/*.js"]
-
-            },
-            css: {
-                src: ["public/styles/**/*.css"]
-            },
-            gitprecommit: {
-                src: ["public/scripts/**/*.js"],
-                files: ["public/bower_components/**/*.js", "public/bower_components/*.js", "public/angular/**/*.js", "public/angular/*.js"],
-                options: {
-                    mode: "VERIFY_ONLY"
-                }
+                src: ["{,*/}*.js"],
+                files: ["lib/{,*/}*.js", "public/angular/{,*/}*.js"]
             }
         },
 
@@ -180,7 +157,7 @@ module.exports = function(grunt) {
 
 
 
-    grunt.registerTask('default', ['jsbeautifier:default', 'karma', 'express', 'watch']);
+    grunt.registerTask('default', ['jsbeautifier:default', 'karma']);
     grunt.registerTask('simple', ['express', 'watch']);
     grunt.registerTask('beautify', ['jsbeautifier:default']);
     grunt.registerTask('js', ['express', 'jsbeautifier:js', 'watch:js']);

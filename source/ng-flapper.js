@@ -1,4 +1,3 @@
-
 /**
  * ng-Flapper.js v0.0.1
  *
@@ -12,92 +11,93 @@
  */
 
 (function(window, document, angular, undefined) {
-    
-"use strict";
 
-angular.module('ngFlapper')
+    "use strict";
+
+    angular.module('ngFlapper')
 
 
-    .directive('flapperRepeat', ['$interval', 
-    
-    function($interval) {
+    .directive('flapperRepeat', ['$interval',
+
+        function($interval) {
+
+            function link(scope, element, attrs) {
+
+                var timeoutId;
+                var text = attrs.ngModel;
+
+                var nbFlap = attrs.nbFlap;
+
+                element.flapper({
+                    width: nbFlap,
+                    chars_preset: 'alphanum'
+                });
+
+                scope.$watch(attrs.ngModel, function(value) {
+                    if (value) {
+                        text = value;
+                    }
+                });
+
+                element.on('$destroy', function() {
+                    $interval.cancel(timeoutId);
+                });
+
+                setTimeout(function() {
+                    element.val(text).change();
+                    var toggle = false;
+                    timeoutId = setInterval(function() {
+                        if (toggle) {
+                            element.val(text).change();
+                        } else {
+                            element.val('').change();
+                        }
+                        toggle = !toggle;
+                    }, 5000);
+                }, 1000);
+
+            }
+
+            return {
+                require: '?ngModel',
+                restrict: 'AE',
+                scope: {},
+                link: link
+            };
+        }
+    ])
+
+    .directive('flapper', [function() {
 
         function link(scope, element, attrs) {
-            
-            var timeoutId;
-            var text = attrs.ngModel;
-
-            var nbFlap = attrs.nbFlap;
 
             element.flapper({
-                width: nbFlap,
-                chars_preset: 'alphanum'
+                width: attrs.nbFlap,
+                chars_preset: attrs.type || 'alphanum',
+                timing: 100
             });
 
-            scope.$watch(attrs.ngModel, function(value) {
+            attrs.$observe('ngModels', function(value) {
                 if (value) {
-                    text = value;
+                    element.val(value).change();
                 }
             });
 
-            element.on('$destroy', function() {
-                $interval.cancel(timeoutId);
+            scope.$watch('ngModel', function(value) {
+                if (value) {
+                    element.val(value).change();
+                }
             });
-
-            setTimeout(function() {
-                element.val(text).change();
-                var toggle = false;
-                timeoutId = setInterval(function() {
-                    if (toggle) {
-                        element.val(text).change();
-                    } else {
-                        element.val('').change();
-                    }
-                    toggle = !toggle;
-                }, 5000);
-            }, 1000);
 
         }
 
         return {
             require: '?ngModel',
             restrict: 'AE',
+            transclude: true,
             scope: {},
             link: link
         };
-    }])
-
-.directive('flapper', [function() {
-
-    function link(scope, element, attrs) {
-
-        element.flapper({
-            width: attrs.nbFlap,
-            chars_preset: attrs.type || 'alphanum',
-            timing: 100
-        });
-
-        attrs.$observe('ngModels', function(value) {
-            if (value) {
-                element.val(value).change();
-            }
-        });
-
-        scope.$watch('ngModel', function(value) {
-            if (value) {
-                element.val(value).change();
-            }
-        });
-
-    }
-
-    return {
-        require: '?ngModel',
-        restrict: 'AE',
-        transclude: true,
-        scope: {},
-        link: link
-    };
-}]);
+    }]);
 
 })(window, document, angular);

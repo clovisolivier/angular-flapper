@@ -1,6 +1,7 @@
 {
-  "name": "ngFlapper",
+  "name": "ngflapper",
   "version": "0.0.1",
+  "main": "source/ng-flapper.js",
   "ignore": [
         "source",
         "spec",
@@ -27,5 +28,7 @@
     "angular-mocks": "^1.4.0"
   },
   "appPath": "public",
-  "moduleName": "ngFlapper"
+  "moduleName": "ngflapper",
+
+  "homepage": "https://github.com/clovisolivier/ngFlapper"
 }
