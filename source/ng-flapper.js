@@ -17,55 +17,59 @@
     angular.module('ngFlapper')
 
 
-    .directive('flapperRepeat', ['$interval',
+    .directive('flapperRepeat', ['$interval', function($interval) {
 
-        function($interval) {
+        function link(scope, element, attrs) {
 
-            function link(scope, element, attrs) {
+            var timeoutId, text;
 
-                var timeoutId;
-                var text = attrs.ngModel;
+            element.flapper({
+                width: attrs.nbFlap,
+                format: attrs.format,
+                align: attrs.align,
+                padding: attrs.padding,
+                chars_preset: attrs.type,
+                timing: attrs.timing, // the maximum timing for digit animation
+                min_timing: attrs.min_timing, // the minimum timing for digit animation
+                threshhold: attrs.threshhold, // the point at which Flapper will switch from
+                // simple to detailed animations
+            });
 
-                var nbFlap = attrs.nbFlap;
+            scope.$watch('ngModel', function(value) {
+                if (value) {
+                    text = value;
+                }
+            });
 
-                element.flapper({
-                    width: nbFlap,
-                    chars_preset: 'alphanum'
-                });
+            element.on('$destroy', function() {
+                $interval.cancel(timeoutId);
+            });
 
-                scope.$watch(attrs.ngModel, function(value) {
-                    if (value) {
-                        text = value;
+            setTimeout(function() {
+                element.val(text).change();
+                var toggle = false;
+                timeoutId = setInterval(function() {
+                    if (toggle) {
+                        element.val(text).change();
+                    } else {
+                        element.val('').change();
                     }
-                });
+                    toggle = !toggle;
+                }, 5000);
+            }, 1000);
 
-                element.on('$destroy', function() {
-                    $interval.cancel(timeoutId);
-                });
-
-                setTimeout(function() {
-                    element.val(text).change();
-                    var toggle = false;
-                    timeoutId = setInterval(function() {
-                        if (toggle) {
-                            element.val(text).change();
-                        } else {
-                            element.val('').change();
-                        }
-                        toggle = !toggle;
-                    }, 5000);
-                }, 1000);
-
-            }
-
-            return {
-                require: '?ngModel',
-                restrict: 'AE',
-                scope: {},
-                link: link
-            };
         }
-    ])
+
+        return {
+            restrict: 'A',
+            transclude: true,
+            scope: {
+                ngModel: '=',
+            },
+            link: link
+        };
+    }])
+
 
     .directive('flapper', [function() {
 
@@ -73,14 +77,14 @@
 
             element.flapper({
                 width: attrs.nbFlap,
-                chars_preset: attrs.type || 'alphanum',
-                timing: 100
-            });
-
-            attrs.$observe('ngModels', function(value) {
-                if (value) {
-                    element.val(value).change();
-                }
+                format: attrs.format,
+                align: attrs.align,
+                padding: attrs.padding,
+                chars_preset: 'alphanum' || attrs.type,
+                timing: attrs.timing, // the maximum timing for digit animation
+                min_timing: attrs.min_timing, // the minimum timing for digit animation
+                threshhold: attrs.threshhold, // the point at which Flapper will switch from
+                // simple to detailed animations
             });
 
             scope.$watch('ngModel', function(value) {
@@ -92,12 +96,14 @@
         }
 
         return {
-            require: '?ngModel',
-            restrict: 'AE',
+            restrict: 'A',
             transclude: true,
-            scope: {},
+            scope: {
+                ngModel: '=',
+            },
             link: link
         };
-    }]);
+
+    }])
 
 })(window, document, angular);

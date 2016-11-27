@@ -26,33 +26,6 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
-        watch: {
-            jsTest: {
-                files: ['test/**/*.test.js'],
-                tasks: ['newer:jshint:test', 'newer:jscs:test', 'karma']
-            },
-            js: {
-                options: {
-                    livereload: true
-                },
-                files: ['public/scripts/**', 'server/**/*.js', 'Gruntfile.js', 'server.js', 'public/**/*.js'],
-                tasks: ['newer:jshint', 'newer:jscs:all', 'karma', 'build_dev']
-            },
-            html: {
-                options: {
-                    livereload: true
-                },
-                files: ['public/**/*.html', 'public/index.html'],
-                tasks: ['newer:bootlint', 'newer:htmllint', 'build_dev']
-            },
-            css: {
-                options: {
-                    livereload: true
-                },
-                files: ['public/styles/**/*.css', 'public/styles/*.css'],
-                tasks: ['newer:csslint:lax', 'build']
-            }
-        },
 
         karma: {
             unit: {
@@ -60,14 +33,18 @@ module.exports = function(grunt) {
             }
         },
 
-        express: {
-            all: {
-                options: {
-                    server: 'server.js',
-                    hostname: 'localhost',
-                    bases: ['./public'],
-                    livereload: true
-                }
+        // Empties folders to start fresh
+        clean: {
+            dist: {
+                files: [{
+                    dot: true,
+                    src: [
+                        '<%= myApp.dist %>/{,*/}*',
+                        '!<%= myApp.dist %>/.git{,*/}*',
+                        '!<%= myApp.dist %>/bower_components{,*/}*'
+
+                    ]
+                }]
             }
         },
 
@@ -97,100 +74,79 @@ module.exports = function(grunt) {
             }
         },
 
-        // Analyse bootstrap style
-        bootlint: {
-            options: {
-                stoponerror: false,
-                relaxerror: []
-            },
-            files: ['<%= myApp.app %>/index.html']
-        },
 
-        // Analyse HTML style
-        htmllint: {
-            options: {
-                force: true,
-                ignore: [/Attribute “ng-[a-z-]+” not allowed on element “[a-z-]+” at this point./,
-                    /Attribute “.*chart” not allowed on element “[a-z-]+” at this point./,
-                    'Element “marquee” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)',
-                    /Element “head” is missing a required instance of child element “title”./,
-                    /Bad value “{{.*}}” for attribute “.*” on element “.*”: Illegal character in path segment: “{” is not allowed./
-                ]
-            },
-            src: ["public/*/*.html"]
-        },
-
-        // Analyse css style
-        csslint: {
-            strict: {
-                options: {
-                    import: 2
-                },
-                src: ['<%= myApp.app %>/styles/**/*.css']
-            },
-            lax: {
-                options: {
-                    import: false
-                },
-                src: ['<%= myApp.app %>/styles/**/*.css']
-            }
-        },
         jsbeautifier: {
             default: {
                 src: ["{,*/}*.js"],
                 files: ["lib/{,*/}*.js", "public/angular/{,*/}*.js"]
             }
         },
-
-        parallel: {
-            mix: {
-                tasks: [{
-                    grunt: true,
-                    args: ['jshint']
+        // Copies remaining files to places other tasks can use
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= myApp.app %>',
+                    dest: '<%= myApp.dist %>',
+                    src: [
+                        '*.{ico,png,txt,json}',
+                        '*.html',
+                        'images/{,*/}*.{webp}',
+                        'styles/fonts/{,*/}*.*'
+                    ]
                 }, {
-                    grunt: true,
-                    args: ['htmllint']
+                    expand: true,
+                    cwd: '.tmp/images',
+                    dest: '<%= myApp.dist %>/images',
+                    src: ['generated/*']
+                }, {
+                    expand: true,
+                    cwd: 'bower_components/bootstrap/dist',
+                    src: 'fonts/*',
+                    dest: '<%= myApp.dist %>'
                 }]
             }
-        }
+        },
+
+        ngAnnotate: {
+            options: {
+                singleQuotes: true,
+            },
+            dist: {
+                files: {
+                    '.tmp/js/app.js': ['<%= myApp.app %>{,*/}*.js']
+                }
+            }
+        },
+        // uglify JS and html JS to tmp to dist
+        uglify: {
+            dist: {
+                files: {
+                    '<%= myApp.dist %>/ng-flapper.js': [
+                        '.tmp/js/app.js'
+                    ]
+                }
+            }
+        },
+        // Run some tasks in parallel to speed up the build process
+        concurrent: {
+            dist: [
+                'jsbeautifier:default'
+            ]
+        },
     });
 
-
-
-    grunt.registerTask('default', ['jsbeautifier:default', 'karma']);
-    grunt.registerTask('simple', ['express', 'watch']);
     grunt.registerTask('beautify', ['jsbeautifier:default']);
-    grunt.registerTask('js', ['express', 'jsbeautifier:js', 'watch:js']);
-    grunt.registerTask('css', ['express', 'jsbeautifier:css', 'watch:css']);
-    grunt.registerTask('html', ['express', 'jsbeautifier:html', 'watch:html']);
 
-    grunt.registerTask('test', [
-        'karma'
-    ]);
 
-    grunt.registerTask('build_dev', [
-        /*   'newer:concurrent:dist',
-           'newer:copy:dist',
-           'newer:ngAnnotate',
-           'concat_css',
-           'newer:postcss:dist',
-           'newer:cssmin',
-           'ngtemplates',
-           'newer:uglify',
-           'newer:htmlmin'*/
-    ]);
-
+    // tasks apply on all files
     grunt.registerTask('build', [
-        /*'clean:dist',
+        'clean:dist',
         'concurrent:dist',
         'copy:dist',
         'ngAnnotate',
-        'concat_css',
-        'postcss:dist',
-        'cssmin',
-        'ngtemplates',
         'uglify',
-        'htmlmin'*/
     ]);
 
 };

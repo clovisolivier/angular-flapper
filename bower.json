@@ -1,7 +1,7 @@
 {
-  "name": "ngflapper",
+  "name": "ngFlapper",
   "version": "0.0.1",
-  "main": "source/ng-flapper.js",
+  "main": "dist/ng-flapper.js",
   "ignore": [
         "source",
         "spec",
@@ -12,7 +12,13 @@
         "bower.json",
         "gruntfile.js",
         "package.json",
-        "README.md"
+        "README.md",
+        "karma.conf.js",
+        "CHANGELOG.md",
+        "test",
+        "node_modules",
+        "lib",
+        ".tmp"
     ],
   "keywords": [
     "angular",
@@ -28,7 +34,7 @@
     "angular-mocks": "^1.4.0"
   },
   "appPath": "public",
-  "moduleName": "ngflapper",
+  "moduleName": "ngFlapper",
 
   "homepage": "https://github.com/clovisolivier/ngFlapper"
 }
