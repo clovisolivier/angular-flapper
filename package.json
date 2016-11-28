@@ -1,7 +1,7 @@
 {
   "name": "ngflapper",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Application pour wrapper JQuery flapper",
   "main": "source/ng-flapper.js",
   "devDependencies": {

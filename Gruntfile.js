@@ -139,7 +139,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('beautify', ['jsbeautifier:default']);
 
-
     // tasks apply on all files
     grunt.registerTask('build', [
         'clean:dist',
@@ -148,5 +147,4 @@ module.exports = function(grunt) {
         'ngAnnotate',
         'uglify',
     ]);
-
 };

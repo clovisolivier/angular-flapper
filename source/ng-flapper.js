@@ -1,20 +1,19 @@
 /**
  * ng-Flapper.js v0.0.1
  *
- * Original jQuery project: https://github.com/davatron5000/FitText.js
  *
- * Copyright 2015, Patrick Marabeas http://marabeas.io
+ * Copyright 2016, Clovis OLIVIER
  * Released under the MIT license
  * http://opensource.org/licenses/mit-license.php
  *
- * Date: 12/06/2016
+ * Date: 28/11/2016
  */
 
 (function(window, document, angular, undefined) {
 
     "use strict";
 
-    angular.module('ngFlapper')
+    angular.module('angular-flapper')
 
 
     .directive('flapperRepeat', ['$interval', function($interval) {
@@ -30,7 +29,7 @@
                 padding: attrs.padding,
                 chars_preset: attrs.type,
                 timing: attrs.timing, // the maximum timing for digit animation
-                min_timing: attrs.min_timing, // the minimum timing for digit animation
+                min_timing: attrs.min - timing, // the minimum timing for digit animation
                 threshhold: attrs.threshhold, // the point at which Flapper will switch from
                 // simple to detailed animations
             });
@@ -82,7 +81,7 @@
                 padding: attrs.padding,
                 chars_preset: 'alphanum' || attrs.type,
                 timing: attrs.timing, // the maximum timing for digit animation
-                min_timing: attrs.min_timing, // the minimum timing for digit animation
+                min_timing: attrs.min - timing, // the minimum timing for digit animation
                 threshhold: attrs.threshhold, // the point at which Flapper will switch from
                 // simple to detailed animations
             });
