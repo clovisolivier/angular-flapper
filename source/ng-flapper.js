@@ -75,7 +75,7 @@
         function link(scope, element, attrs) {
 
             element.flapper({
-                width: attrs.nbFlap,
+                width: attrs.nbflap,
                 format: attrs.format,
                 align: attrs.align,
                 padding: attrs.padding,
