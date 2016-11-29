@@ -30,7 +30,12 @@ module.exports = function(grunt) {
         karma: {
             unit: {
                 configFile: 'test/karma.conf.js'
-            }
+            },
+            continuous: {
+                configFile: 'test/karma.conf.js',
+                singleRun: true,
+                browsers: ['PhantomJS']
+            },
         },
 
         // Empties folders to start fresh
@@ -78,7 +83,7 @@ module.exports = function(grunt) {
         jsbeautifier: {
             default: {
                 src: ["{,*/}*.js"],
-                files: ["lib/{,*/}*.js", "public/angular/{,*/}*.js"]
+                files: ["dist/ng-flapper.js", "bower_components/{,*/}*.js"]
             }
         },
         // Copies remaining files to places other tasks can use
@@ -138,6 +143,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('beautify', ['jsbeautifier:default']);
+    grunt.registerTask('test', ['karma:continuous']);
 
     // tasks apply on all files
     grunt.registerTask('build', [

@@ -1,4 +1,4 @@
 node_modules
-.bower-*
-lib
+bower*
+lib*
 .tmp

@@ -1,5 +1,5 @@
 {
-  "name": "ngflapper",
+  "name": "angular-flapper",
   "private": true,
   "version": "0.0.2",
   "description": "Application pour wrapper JQuery flapper",

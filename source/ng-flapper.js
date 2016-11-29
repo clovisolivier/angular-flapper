@@ -13,7 +13,7 @@
 
     "use strict";
 
-    angular.module('angular-flapper')
+    angular.module('angular-flapper', [])
 
 
     .directive('flapperRepeat', ['$interval', function($interval) {
