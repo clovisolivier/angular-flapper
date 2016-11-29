@@ -23,13 +23,13 @@
             var timeoutId, text;
 
             element.flapper({
-                width: attrs.nbFlap,
+                width: attrs.nbflap,
                 format: attrs.format,
                 align: attrs.align,
                 padding: attrs.padding,
                 chars_preset: attrs.type,
                 timing: attrs.timing, // the maximum timing for digit animation
-                min_timing: attrs.min - timing, // the minimum timing for digit animation
+                min_timing: attrs.mintiming, // the minimum timing for digit animation
                 threshhold: attrs.threshhold, // the point at which Flapper will switch from
                 // simple to detailed animations
             });
@@ -81,7 +81,7 @@
                 padding: attrs.padding,
                 chars_preset: 'alphanum' || attrs.type,
                 timing: attrs.timing, // the maximum timing for digit animation
-                min_timing: attrs.min - timing, // the minimum timing for digit animation
+                min_timing: attrs.mintiming, // the minimum timing for digit animation
                 threshhold: attrs.threshhold, // the point at which Flapper will switch from
                 // simple to detailed animations
             });

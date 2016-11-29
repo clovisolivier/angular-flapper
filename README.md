@@ -41,7 +41,7 @@ Include it in your AngularJS application
 <div flapper class="slow dark M" ng-model="value" timing=250 />
 
 <!-- minimum timing for digit animation -->
-<div flapper class="slow dark M" ng-model="value" min-timing=250 />
+<div flapper class="slow dark M" ng-model="value" mintiming=250 />
 
 ```
 
