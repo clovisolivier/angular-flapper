@@ -10,7 +10,24 @@ As jQuery plugin wrapper, flapper need to be install
 
 Requirements : `bower install flapper`
 
-Grab it with Bower : `bower install angular-flapper`
+Add following code in your index.html
+
+```html
+<!-- import flapper css style  -->
+<link href="bower_components/flapper/css/flapper.css" type="text/css" rel="stylesheet" />
+
+<!-- import flapper jquery  -->
+<script src="bower_components/flapper/src/jquery.flapper.js"></script>
+```
+
+Next grab angular-flapper with bower : `bower install angular-flapper`
+
+Add following code in your index.html
+
+```html
+<!-- import flapper jquery  -->
+<script src="bower_components/angular-flapper/dist/ng-flapper.js"></script>
+```
 
 Include it in your AngularJS application
 
